@@ -25,5 +25,9 @@ compinit
 
 plugins=()
 
+# for diem-musik.de
+tagesformupload() { aws s3 cp ~/Music/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
+diempostnew() { node ~/checkouts/Xiphe/diem-musik.de/new_post.js $1 }
+
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
