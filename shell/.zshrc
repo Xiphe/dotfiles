@@ -1,4 +1,4 @@
-export PATH="$HOME/.nenv/bin:$PATH"
+export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$PATH"
 export ZSH=~/.oh-my-zsh
 export BULLETTRAIN_TIME_SHOW=false
 export BULLETTRAIN_RUBY_SHOW=false
@@ -31,3 +31,4 @@ diempostnew() { node ~/checkouts/Xiphe/diem-musik.de/new_post.js $1 }
 
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
+eval "$(rbenv init -)"
