@@ -32,3 +32,4 @@ diempostnew() { node ~/checkouts/Xiphe/diem-musik.de/new_post.js $1 }
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
 eval "$(rbenv init -)"
+. `brew --prefix`/etc/profile.d/z.sh
