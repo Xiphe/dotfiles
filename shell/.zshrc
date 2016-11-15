@@ -28,6 +28,19 @@ plugins=()
 # for diem-musik.de
 tagesformupload() { aws s3 cp ~/Music/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
 diempostnew() { node ~/checkouts/Xiphe/diem-musik.de/new_post.js $1 }
+nodejs-init() {
+  git clone git@github.com:Xiphe/js-dotfiles.git $1 &&
+  cd $1 &&
+  rm -rf .git &&
+  rm README.md &&
+  git init &&
+  git add . &&
+  git commit -m'chore(js-dotfiles): initiate dotfiles' -m'https://github.com/Xiphe/js-dotfiles' &&
+  npm init &&
+  npm install --save-dev --save-exact eslint-config-airbnb-base eslint-plugin-import eslint &&
+  git add . &&
+  git commit -m'chore(package): add package.json'
+}
 
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
