@@ -5,7 +5,7 @@ export BULLETTRAIN_RUBY_SHOW=false
 export BULLETTRAIN_NVM_SHOW=true
 export BULLETTRAIN_NVM_PREFIX=''
 export BULLETTRAIN_DIR_EXTENDED=0
-export EDITOR='atom -n --'
+export EDITOR='vim'
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
