@@ -25,9 +25,11 @@ compinit
 
 plugins=()
 
-# for diem-musik.de
+# for hannesdiem.de
 tagesformupload() { aws s3 cp ~/Music/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
-diempostnew() { node ~/checkouts/Xiphe/diem-musik.de/new_post.js $1 }
+diempostnew() { node ~/checkouts/Xiphe/hannesdiem.de/new_post.js $1 }
+
+# https://github.com/Xiphe/js-dotfiles
 nodejs-init() {
   git clone git@github.com:Xiphe/js-dotfiles.git $1 &&
   cd $1 &&
