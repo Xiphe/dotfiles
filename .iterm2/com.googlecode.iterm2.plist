@@ -65,9 +65,9 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 364 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>342 156 796 473 0 0 1440 877 </string>
+	<string>342 248 796 473 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1 422 1438 453 0 0 1440 877 </string>
+	<string>1 317 1438 558 0 0 1440 877 </string>
 	<key>NeverWarnAboutSpaces</key>
 	<true/>
 	<key>NeverWarnAboutSpaces_selection</key>
@@ -81,12 +81,16 @@
 			<false/>
 			<key>Ansi 0 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.19370138645172119</real>
+				<real>0.50169879198074341</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.15575926005840302</real>
+				<real>0.42148533463478088</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.12754102051258087</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>
@@ -207,12 +211,16 @@
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.15170273184776306</real>
+				<real>0.89137744903564453</real>
+				<key>Color Space</key>
+				<string>Calibrated</string>
 				<key>Green Component</key>
-				<real>0.11783610284328461</real>
+				<real>0.59986650943756104</real>
 				<key>Red Component</key>
-				<real>0.0</real>
+				<real>0.13115623593330383</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -1434,6 +1442,8 @@
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>10D77667-CA6B-4D2B-9D5C-7183017ACEC5</string>
+	<key>NoSyncNeverAskAboutSettingAlternateMouseScroll</key>
+	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1486,7 +1496,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2016-11-25T17:36:23Z</date>
+	<date>2017-01-02T19:32:53Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SmartPlacement</key>
@@ -1500,6 +1510,10 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.0.12</string>
+	<string>3.0.13</string>
+	<key>kCPKSelectionViewPreferredModeKey</key>
+	<integer>0</integer>
+	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
 </dict>
 </plist>
