@@ -1,4 +1,4 @@
-export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$PATH"
+export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$HOME/Library/Python/2.7/bin:$PATH"
 export ZSH=~/.oh-my-zsh
 export BULLETTRAIN_TIME_SHOW=false
 export BULLETTRAIN_RUBY_SHOW=false
