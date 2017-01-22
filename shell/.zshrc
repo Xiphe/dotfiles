@@ -25,6 +25,9 @@ compinit
 
 plugins=()
 
+serve() { echo "http://localhost:${1:-8000}" && python -m SimpleHTTPServer ${1:-8000} $2 }
+pidforport() { lsof -n -i :$1 }
+
 # for hannesdiem.de
 tagesformupload() { aws s3 cp ~/Music/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
 diempostnew() { node ~/checkouts/Xiphe/hannesdiem.de/new_post.js $1 }
