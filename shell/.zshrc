@@ -76,6 +76,29 @@ link-keys() {
   ln -s /Volumes/$name/gpg/v2/* ~/.gnupg
 }
 
+setup-apps() {
+  CASKS=(iterm2)
+  ABSENT_CASKS=(atom)
+  BREWS=(the_silver_searcher)
+  ABSENT_BREWS=()
+
+  echo "installing..."
+  for i in "${CASKS[@]}"; do
+    brew cask install $i 2> /dev/null
+  done
+  for i in "${ABSENT_CASKS[@]}"; do
+    brew cask uninstall $i 2> /dev/null || true
+  done
+  for i in "${BREWS[@]}"; do
+    brew install $i 2> /dev/null
+  done
+  for i in "${ABSENT_BREWS[@]}"; do
+    brew uninstall $i 2> /dev/null || true
+  done
+
+  echo "OK"
+}
+
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
 eval "$(rbenv init -)"
