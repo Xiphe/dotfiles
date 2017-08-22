@@ -52,6 +52,30 @@ nodejs-init() {
   git commit -m'chore(package): add package.json'
 }
 
+link-keys() {
+  setopt localoptions rmstarsilent
+  local name
+
+  for x in 0 1 2 3 4 5; do
+    if [[ $x == 0 ]]; then
+      name='keys'
+    else
+      name="keys-$x"
+    fi
+    
+    if [[ -d "/Volumes/$name/ssh" ]]; then
+      break
+    fi
+  done
+
+  echo "Linking to '$name'"
+
+  rm ~/.ssh &&
+  rm ~/.gnupg/* &&
+  ln -s /Volumes/$name/ssh ~/.ssh &&
+  ln -s /Volumes/$name/gpg/v2/* ~/.gnupg
+}
+
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
 eval "$(rbenv init -)"
