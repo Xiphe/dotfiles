@@ -6,6 +6,8 @@ export BULLETTRAIN_NVM_SHOW=true
 export BULLETTRAIN_NVM_PREFIX=''
 export BULLETTRAIN_DIR_EXTENDED=0
 export EDITOR='vim'
+export IEVMS_VERSIONS="11 EDGE"
+export ANSIBLE_HOSTS="$HOME/.ansiblehosts"
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -23,7 +25,7 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
-plugins=()
+plugins=(password_generator)
 
 # helpers
 serve() { echo "http://localhost:${1:-8000}" && python -m SimpleHTTPServer ${1:-8000} $2 }
@@ -47,9 +49,13 @@ nodejs-init() {
   git add . &&
   git commit -m'chore(js-dotfiles): initiate dotfiles' -m'https://github.com/Xiphe/js-dotfiles' &&
   npm init &&
-  npm install --save-dev --save-exact eslint-config-airbnb-base eslint-plugin-import eslint &&
+  npm install --save-dev --save-exact eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier prettier eslint &&
   git add . &&
   git commit -m'chore(package): add package.json'
+}
+
+connect-home() {
+  sshuttle -r xiphecloud2 0.0.0.0/0 -vv
 }
 
 link-keys() {
@@ -71,15 +77,19 @@ link-keys() {
   echo "Linking to '$name'"
 
   rm ~/.ssh &&
+  rm ~/.zshenv &&
   rm ~/.gnupg/* &&
+  rm ~/.ansiblehosts &&
   ln -s /Volumes/$name/ssh ~/.ssh &&
-  ln -s /Volumes/$name/gpg/v2/* ~/.gnupg
+  ln -s /Volumes/$name/env/zshenv ~/.zshenv &&
+  ln -s /Volumes/$name/gpg/v2/* ~/.gnupg &&
+  ln -s /Volumes/$name/ansible/hosts ~/.ansiblehosts
 }
 
 setup-apps() {
-  CASKS=(iterm2)
+  CASKS=(alfred bartender cryptomator firefox google-chrome hipchat iterm2 istat-menus java mattermost slack spectacle spotify thunderbird tunnelblick visual-studio-code ynab)
   ABSENT_CASKS=(atom)
-  BREWS=(the_silver_searcher)
+  BREWS=(git gnupg the_silver_searcher wget z)
   ABSENT_BREWS=()
 
   echo "installing..."
