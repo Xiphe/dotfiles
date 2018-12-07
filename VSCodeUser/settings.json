@@ -2,11 +2,12 @@
 {
     "editor.fontSize": 15,
     "editor.formatOnSave": true,
-    "editor.rulers": [80, 100],
+    "editor.rulers": [
+        80,
+        100
+    ],
     "workbench.activityBar.visible": false,
     "git.confirmSync": false,
-    "typescript.validate.enable": false,
-    "javascript.validate.enable": false,
     "explorer.openEditors.visible": 0,
     "workbench.colorTheme": "Oceanic Next (dimmed bg)",
     "workbench.iconTheme": "vs-seti",
@@ -19,14 +20,41 @@
         "Diercks",
         "Hannes",
         "Injectable",
+        "Lasse",
         "PATTERNSON",
+        "Styleguide",
         "Truthy",
         "Unmount",
         "XING",
+        "Xiphe",
         "chainable",
+        "cognito",
+        "dynamodb",
         "findus",
         "formik",
+        "nuxt",
+        "promisify",
+        "serverless",
         "xpath"
     ],
-    "explorer.confirmDragAndDrop": false
+    "explorer.confirmDragAndDrop": false,
+    "eslint.validate": [
+        "javascript",
+        "javascriptreact",
+        "vue"
+    ],
+    "vetur.format.defaultFormatter.css": "prettier",
+    "vetur.format.defaultFormatter.postcss": "prettier",
+    "vetur.format.defaultFormatter.scss": "prettier",
+    "vetur.format.defaultFormatter.less": "prettier",
+    "vetur.format.defaultFormatter.js": "prettier",
+    "vetur.format.defaultFormatter.ts": "prettier",
+    "vetur.grammar.customBlocks": {
+        "nsg-doc": "md",
+        "nsg-states": "js"
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.tsserver.log": "verbose",
+    "javascript.validate.enable": false
 }
