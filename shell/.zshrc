@@ -30,14 +30,18 @@ plugins=(password_generator)
 # helpers
 serve() { echo "http://localhost:${1:-8000}" && python -m SimpleHTTPServer ${1:-8000} $2 }
 pidforport() { lsof -n -i :$1 }
+killnodeport() {
+  PORT=$(lsof -n -i :$1 | grep node | sed 's/node *//g' | sed 's/[^0-9]* .*//g')
+  kill $PORT
+}
 deletemergedbranches() { git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d }
 sha1() { openssl dgst -sha1 $1 }
 sha256() { openssl dgst -sha256 $1 }
 sha512() { openssl dgst -sha512 $1 }
 
 # for hannesdiem.de
-tagesformupload() { aws s3 cp ~/Music/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
-diempostnew() { node ~/checkouts/Xiphe/hannesdiem.de/new_post.js $1 }
+tagesformupload() { aws --profile tagesform_upload s3 cp ~/Tagesform/$1/tagesform_$1.mp3 s3://tagesform/tagesform_$1.mp3 }
+diempostnew() { node ~/checkouts/github.com/Xiphe/hannesdiem.de/new_post.js $1 }
 
 # https://github.com/Xiphe/js-dotfiles
 nodejs-init() {
@@ -76,10 +80,10 @@ link-keys() {
 
   echo "Linking to '$name'"
 
-  rm ~/.ssh &&
-  rm ~/.zshenv &&
-  rm ~/.gnupg/* &&
-  rm ~/.ansiblehosts &&
+  rm ~/.ssh;
+  rm ~/.zshenv;
+  rm ~/.gnupg/*;
+  rm ~/.ansiblehosts;
   ln -s /Volumes/$name/ssh ~/.ssh &&
   ln -s /Volumes/$name/env/zshenv ~/.zshenv &&
   ln -s /Volumes/$name/gpg/v2/* ~/.gnupg &&
