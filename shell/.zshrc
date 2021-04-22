@@ -1,4 +1,4 @@
-export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$HOME/Library/Python/2.7/bin:$PATH"
+export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$HOME/Library/Python/2.7/bin:/usr/local/opt/openjdk/bin:$PATH"
 export ZSH=~/.oh-my-zsh
 export BULLETTRAIN_TIME_SHOW=false
 export BULLETTRAIN_RUBY_SHOW=false
@@ -8,6 +8,19 @@ export BULLETTRAIN_DIR_EXTENDED=0
 export EDITOR='vim'
 export IEVMS_VERSIONS="11 EDGE"
 export ANSIBLE_HOSTS="$HOME/.ansiblehosts"
+export HOMEBREW_BUNDLE_FILE="$HOME/dotfiles/Brewfile"
+
+export LC_ALL=en_GB.UTF-8
+export LC_NUMERIC=de_DE.UTF-8
+export LC_TIME=de_DE.UTF-8
+export LC_MONETARY=de_DE.UTF-8
+
+export NPM_CONFIG_INIT_VERSION=0.0.0-development
+export NPM_CONFIG_INIT_AUTHOR_NAME="Hannes Diercks"
+export NPM_CONFIG_INIT_AUTHOR_EMAIL="node@xiphe.net"
+export NPM_CONFIG_INIT_AUTHOR_URL="https://xiphe.net"
+export NPM_CONFIG_INIT_LICENSE="UNLICENSED"
+export PLAYWRIGHT_BROWSERS_PATH=$HOME/.playwright-browsers
 
 HISTFILE=~/.histfile
 HISTSIZE=10000
@@ -28,7 +41,6 @@ compinit
 plugins=(password_generator)
 
 # helpers
-serve() { echo "http://localhost:${1:-8000}" && python -m SimpleHTTPServer ${1:-8000} $2 }
 pidforport() { lsof -n -i :$1 }
 killnodeport() {
   PORT=$(lsof -n -i :$1 | grep node | sed 's/node *//g' | sed 's/[^0-9]* .*//g')
@@ -56,10 +68,6 @@ nodejs-init() {
   npm install --save-dev --save-exact eslint-config-airbnb-base eslint-plugin-import eslint-config-prettier eslint-plugin-prettier prettier eslint &&
   git add . &&
   git commit -m'chore(package): add package.json'
-}
-
-connect-home() {
-  sshuttle -r xiphecloud2 0.0.0.0/0 -vv
 }
 
 link-keys() {
@@ -90,30 +98,15 @@ link-keys() {
   ln -s /Volumes/$name/ansible/hosts ~/.ansiblehosts
 }
 
-setup-apps() {
-  CASKS=(alfred bartender cryptomator firefox google-chrome hipchat iterm2 istat-menus java mattermost slack spectacle spotify thunderbird tunnelblick visual-studio-code ynab)
-  ABSENT_CASKS=(atom)
-  BREWS=(git gnupg the_silver_searcher wget z)
-  ABSENT_BREWS=()
-
-  echo "installing..."
-  for i in "${CASKS[@]}"; do
-    brew cask install $i 2> /dev/null
-  done
-  for i in "${ABSENT_CASKS[@]}"; do
-    brew cask uninstall $i 2> /dev/null || true
-  done
-  for i in "${BREWS[@]}"; do
-    brew install $i 2> /dev/null
-  done
-  for i in "${ABSENT_BREWS[@]}"; do
-    brew uninstall $i 2> /dev/null || true
-  done
-
-  echo "OK"
-}
 
 source $ZSH/oh-my-zsh.sh
 eval "$(nenv init -)"
 eval "$(rbenv init -)"
 . `brew --prefix`/etc/profile.d/z.sh
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
