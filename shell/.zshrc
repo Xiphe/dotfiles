@@ -1,10 +1,26 @@
-export PATH="$HOME/.nenv/bin:$HOME/.rbenv/bin:$HOME/Library/Python/2.7/bin:/usr/local/opt/openjdk/bin:$PATH"
+export PATH="$HOME/.rbenv/bin:$PATH"
 export ZSH=~/.oh-my-zsh
-export BULLETTRAIN_TIME_SHOW=false
-export BULLETTRAIN_RUBY_SHOW=false
-export BULLETTRAIN_NVM_SHOW=true
+
+if [[ -f .env && -r .env ]]; then
+  source .env
+fi
+
 export BULLETTRAIN_NVM_PREFIX=''
+export BULLETTRAIN_AWS_PREFIX=''
 export BULLETTRAIN_DIR_EXTENDED=0
+export BULLETTRAIN_TIME_BG=black
+export BULLETTRAIN_TIME_FG=white
+export BULLETTRAIN_PROMPT_ORDER=(
+  time
+  custom
+  aws
+  nvm
+  dir
+  git
+  cmd_exec_time
+  status
+)
+
 export EDITOR='vim'
 export IEVMS_VERSIONS="11 EDGE"
 export ANSIBLE_HOSTS="$HOME/.ansiblehosts"
@@ -29,7 +45,7 @@ ZSH_THEME="bullet-train"
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="true"
 HIST_STAMPS="dd.mm.yyyy"
-ZSH_CUSTOM=~/.oh-my-zsh-custom
+ZSH_CUSTOM=~/dotfiles/.oh-my-zsh-custom
 
 setopt appendhistory autocd extendedglob nomatch notify
 unsetopt beep
@@ -38,7 +54,7 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
-plugins=(password_generator)
+plugins=(password_generator env)
 
 # helpers
 pidforport() { lsof -n -i :$1 }
@@ -100,7 +116,10 @@ link-keys() {
 
 
 source $ZSH/oh-my-zsh.sh
-eval "$(nenv init -)"
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 eval "$(rbenv init -)"
 . `brew --prefix`/etc/profile.d/z.sh
 
