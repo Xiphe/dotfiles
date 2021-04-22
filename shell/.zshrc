@@ -1,12 +1,10 @@
 export PATH="$HOME/.rbenv/bin:$PATH"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 export ZSH=~/.oh-my-zsh
-
-if [[ -f .env && -r .env ]]; then
-  source .env
-fi
 
 export BULLETTRAIN_NVM_PREFIX=''
 export BULLETTRAIN_AWS_PREFIX=''
+export BULLETTRAIN_RUBY_PREFIX=''
 export BULLETTRAIN_DIR_EXTENDED=0
 export BULLETTRAIN_TIME_BG=black
 export BULLETTRAIN_TIME_FG=white
@@ -14,7 +12,6 @@ export BULLETTRAIN_PROMPT_ORDER=(
   time
   custom
   aws
-  nvm
   dir
   git
   cmd_exec_time
@@ -54,7 +51,7 @@ zstyle :compinstall filename '~/.zshrc'
 autoload -Uz compinit
 compinit
 
-plugins=(password_generator env)
+plugins=(password_generator env btmp)
 
 # helpers
 pidforport() { lsof -n -i :$1 }
@@ -114,15 +111,11 @@ link-keys() {
   ln -s /Volumes/$name/ansible/hosts ~/.ansiblehosts
 }
 
-
-source $ZSH/oh-my-zsh.sh
-
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+source $ZSH/oh-my-zsh.sh
 
 eval "$(rbenv init -)"
 . `brew --prefix`/etc/profile.d/z.sh
-
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
 [[ -f /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh
