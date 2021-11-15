@@ -60,7 +60,7 @@
     "Alpha Component" : 1,
     "Green Component" : 0.86963129043579102
   },
-  "Use Cursor Guide" : true,
+  "Use Cursor Guide" : false,
   "Ambiguous Double Width" : false,
   "Jobs to Ignore" : [
     "rlogin",
@@ -374,9 +374,9 @@
       "Action" : 10
     }
   },
-  "Window Type" : 0,
   "Cursor Boost" : 0,
   "Blur Radius" : 16.110583810707958,
+  "Window Type" : 0,
   "Background Image Location" : "",
   "Blur" : true,
   "Badge Color" : {
@@ -464,11 +464,11 @@
   "Normal Font" : "DroidSansMonoSlashedForPowerline 12",
   "Custom Directory" : "Recycle",
   "Ansi 0 Color" : {
-    "Red Component" : 0.11764705882352941,
+    "Red Component" : 0.082352941176470587,
     "Color Space" : "sRGB",
-    "Blue Component" : 0.11764705882352941,
+    "Blue Component" : 0.082352941176470587,
     "Alpha Component" : 1,
-    "Green Component" : 0.11764705882352941
+    "Green Component" : 0.082352941176470587
   },
   "Guid" : "7AA0D44D-217C-42DC-B79F-A340C3EBE37D"
 }
