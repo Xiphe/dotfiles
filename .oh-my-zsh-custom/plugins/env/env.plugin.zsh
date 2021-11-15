@@ -25,7 +25,7 @@ load-local-conf() {
   # Restore previous state
   while IFS= read -r prevname; do
     if [ "$prevname" ]; then
-      eval "$prevname=\$DOT_ENV_PREV_$prevname;DOT_ENV_PREV_$prevname="
+      eval "export $prevname=\$DOT_ENV_PREV_$prevname;DOT_ENV_PREV_$prevname="
     fi
   done <<< "$DOT_ENV_PREV_NAMES"
 
@@ -35,16 +35,16 @@ load-local-conf() {
 
   # Load env
   if [ "$envfile" ]; then
-    local vars="$(cat $envfile | grep -E '^[A-Z_]+=.+')"
+    local vars="$(cat $envfile | grep -E '^[A-Z0-9_]+=.+')"
     local nl=$'\n'
     while IFS= read -r var; do
-      local name="$(echo $var | grep -oE '^[A-Z_]+')"
+      local name="$(echo $var | grep -oE '^[A-Z0-9_]+')"
+      eval "DOT_ENV_PREV_$name=\$$name"
+      eval "export $var"
       # Store previous values
       DOT_ENV_PREV_NAMES="$DOT_ENV_PREV_NAMES$nl$name"
-      eval "DOT_ENV_PREV_$name=\$$name"
     done <<< "$vars"
 
-    source $envfile
     DOT_ENV_LOADED=$envfile
   fi
 }

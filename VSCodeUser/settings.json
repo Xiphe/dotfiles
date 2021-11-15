@@ -7,7 +7,8 @@
   "git.confirmSync": false,
   "explorer.openEditors.visible": 0,
   "files.associations": {
-    "*.psx": "javascript"
+    "*.psx": "javascript",
+    "*.js": "typescript"
   },
   "typescript.tsserver.pluginPaths": ["typescript-plugin-css-modules"],
   "workbench.colorCustomizations": {
@@ -26,6 +27,7 @@
     "Netmatch",
     "PATTERNSON",
     "PIXI",
+    "Prefetch",
     "SPOTIFY",
     "Styleguide",
     "Truthy",
@@ -75,12 +77,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "liveshare.featureSet": "insiders",
-  "workbench.editorAssociations": [
-    {
-      "viewType": "default",
-      "filenamePattern": "*.yml"
-    }
-  ],
+  "workbench.editorAssociations": {
+    "*.yml": "default"
+  },
   "ontology-curator.userId": "26680905",
   "ontology-curator.apiUrl": "http://staging-1.ds.ams1.xing.com:9123/rest/",
   "ontology-curator.dbStateRemote": "git@source.xing.com:data-science/ontology-curator-changes.git",
@@ -113,5 +112,9 @@
     "**/.settings": true,
     "**/.factorypath": true
   },
-  "java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home"
+  "java.home": "/Library/Java/JavaVirtualMachines/adoptopenjdk-11.jdk/Contents/Home",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.guides.bracketPairs": true
 }
