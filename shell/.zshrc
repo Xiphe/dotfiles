@@ -1,5 +1,6 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.rbenv/bin:$PATH"
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+export NVM_DIR="$HOME/.nvm"
 export ZSH=~/.oh-my-zsh
 
 export BULLETTRAIN_NVM_PREFIX=''
@@ -53,6 +54,9 @@ compinit
 
 plugins=(password_generator env btmp)
 
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
 # helpers
 pidforport() { lsof -n -i :$1 }
 killnodeport() {
@@ -104,17 +108,13 @@ link-keys() {
   rm ~/.ssh;
   rm ~/.zshenv;
   rm ~/.gnupg/*;
-  rm ~/.ansiblehosts;
   ln -s /Volumes/$name/ssh ~/.ssh &&
   ln -s /Volumes/$name/env/zshenv ~/.zshenv &&
   ln -s /Volumes/$name/gpg/v2/* ~/.gnupg &&
-  ln -s /Volumes/$name/ansible/hosts ~/.ansiblehosts
 }
 
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 source $ZSH/oh-my-zsh.sh
 
-eval "$(rbenv init -)"
 . `brew --prefix`/etc/profile.d/z.sh
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
