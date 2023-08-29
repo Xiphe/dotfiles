@@ -57,6 +57,8 @@ plugins=(password_generator env btmp)
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh" # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
+nvm use default --silent
+
 # helpers
 pidforport() { lsof -n -i :$1 }
 killnodeport() {
@@ -89,28 +91,15 @@ nodejs-init() {
 
 link-keys() {
   setopt localoptions rmstarsilent
-  local name
-
-  for x in 0 1 2 3 4 5; do
-    if [[ $x == 0 ]]; then
-      name='keys'
-    else
-      name="keys-$x"
-    fi
-    
-    if [[ -d "/Volumes/$name/ssh" ]]; then
-      break
-    fi
-  done
-
-  echo "Linking to '$name'"
 
   rm ~/.ssh;
   rm ~/.zshenv;
   rm ~/.gnupg/*;
-  ln -s /Volumes/$name/ssh ~/.ssh &&
-  ln -s /Volumes/$name/env/zshenv ~/.zshenv &&
-  ln -s /Volumes/$name/gpg/v2/* ~/.gnupg &&
+  rm ~/.aws;
+  ln -s ~/.keys/ssh ~/.ssh &&
+  ln -s ~/.keys/env/zshenv ~/.zshenv &&
+  ln -s ~/.keys/gpg/v2/* ~/.gnupg &&
+  ln -s ~/.keys/aws ~/.aws &&
 }
 
 source $ZSH/oh-my-zsh.sh
