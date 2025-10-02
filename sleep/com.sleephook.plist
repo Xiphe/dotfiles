@@ -16,5 +16,10 @@
     <string>/tmp/sleephook.out</string>
     <key>StandardErrorPath</key>
     <string>/tmp/sleephook.err</string>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
 </dict>
 </plist>
