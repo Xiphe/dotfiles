@@ -89,20 +89,80 @@ nodejs-init() {
   git commit -m'chore(package): add package.json'
 }
 
-link-keys() {
-  setopt localoptions rmstarsilent
+mount-keys() {
+  hdiutil attach "$HOME/Keys.sparsebundle" -mountpoint /Volumes/Keys
+}
 
-  rm ~/.ssh;
-  rm ~/.zshenv;
-  rm ~/.gnupg/*;
-  rm ~/.aws;
-  ln -s ~/.keys/ssh ~/.ssh &&
-  ln -s ~/.keys/env/zshenv ~/.zshenv &&
-  ln -s ~/.keys/gpg/v2/* ~/.gnupg &&
-  ln -s ~/.keys/aws ~/.aws &&
+gitCopyFromBranch() {
+    # Check for correct number of arguments
+    if [ $# -ne 2 ]; then
+        echo "Usage: gitCopyFromBranch source_branch path/to/file"
+        return 1
+    fi
+
+    local source_branch=$1
+    local file_path=$2
+    local dir_path=$(dirname "$file_path")
+
+    # Check if the source branch exists
+    if ! git rev-parse --verify $source_branch > /dev/null 2>&1; then
+        echo "Error: Branch '$source_branch' does not exist."
+        return 1
+    fi
+
+    # Ensure the directory exists
+    if [ ! -d "$dir_path" ]; then
+        echo "Directory '$dir_path' does not exist. Creating directory..."
+        mkdir -p "$dir_path"
+    fi
+
+    # Copy the file from the source branch
+    git show $source_branch:$file_path > $file_path
+}
+
+checkout-pr() {
+  if [[ $# -ne 1 ]]; then
+    echo "Usage: checkout-pr <user:branch>"
+    return 1
+  fi
+
+  # Split input into username and branch
+  local GH_USER="${1%%:*}"
+  local GH_BRANCH="${1#*:}"
+
+  if [[ -z "$GH_USER" || -z "$GH_BRANCH" ]]; then
+    echo "Invalid format. Use: checkout-pr user:branch"
+    return 1
+  fi
+
+  local REMOTE_URL
+  local NEW_REMOTE="$GH_USER"
+
+  # Get the origin remote URL
+  REMOTE_URL=$(git remote get-url origin)
+
+  # Replace the existing owner/org with the given GH_USER
+  NEW_REMOTE_URL=$(echo "$REMOTE_URL" | sed -E "s|([^/:]+)/([^/]+)\.git$|$GH_USER/\2.git|")
+
+  # Check if the remote already exists
+  if ! git remote | grep -q "^$NEW_REMOTE\$"; then
+    echo "Adding remote '$NEW_REMOTE' -> $NEW_REMOTE_URL"
+    git remote add "$NEW_REMOTE" "$NEW_REMOTE_URL"
+  fi
+
+  # Fetch the branch from the new remote
+  git fetch "$NEW_REMOTE" "$GH_BRANCH"
+
+  # Create a local branch and check it out
+  git checkout -b "$GH_BRANCH" "$NEW_REMOTE/$GH_BRANCH"
+
+  # Set upstream correctly
+  git branch --set-upstream-to="$NEW_REMOTE/$GH_BRANCH"
 }
 
 source $ZSH/oh-my-zsh.sh
+
+~/dotfiles/protect-keys.sh --check-log
 
 . `brew --prefix`/etc/profile.d/z.sh
 # tabtab source for electron-forge package

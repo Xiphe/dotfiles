@@ -2,16 +2,16 @@
 # Author: Hannes Diercks
 # Description: Provides a simple command-line translation tool using OpenAI's GPT-4 API
 
-# Check if OPENAI_API_KEY is set
-if [[ -z "$OPENAI_API_KEY" ]]; then
-    echo "Error: OPENAI_API_KEY environment variable is not set" >&2
-    echo "Please set your OpenAI API key in your .zshrc or .zshenv file:" >&2
-    echo "export OPENAI_API_KEY='your-api-key-here'" >&2
-    return 1
-fi
-
 # Main translation function
 function translate() {
+    # Check if OPENAI_API_KEY is set
+    if [[ -z "$OPENAI_API_KEY" ]]; then
+        echo "Error: OPENAI_API_KEY environment variable is not set" >&2
+        echo "Please set your OpenAI API key in your .zshrc or .zshenv file:" >&2
+        echo "export OPENAI_API_KEY='your-api-key-here'" >&2
+        return 1
+    fi
+    
     local num_options=1  # Default to 1 translation option
     local show_options=false
     local alfred_output=false
