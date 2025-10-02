@@ -62,8 +62,13 @@ fi
 log "Starting sync operations"
 
 # 1. Kill any GPG processes that might interfere
-log "Terminating all GPG processes before unmount"
-gpgconf --kill all || log "WARNING: Failed to terminate GPG processes"
+if pgrep gpg > /dev/null; then
+    log "Terminating all GPG processes before unmount"
+    gpgconf --kill all || {
+        log "ERROR: Failed to terminate GPG processes"
+        exit 1
+    }
+fi
 
 # 2. Unmount volume
 if mount | grep -q "$MOUNTPOINT"; then
