@@ -70,13 +70,24 @@ if pgrep gpg > /dev/null; then
     }
 fi
 
-# 2. Unmount volume
+# 2. Unmount and detach volume
 if mount | grep -q "$MOUNTPOINT"; then
+    # Get the device identifier before unmounting
+    DEVICE=$(mount | grep "$MOUNTPOINT" | awk '{print $1}')
+    
     log "Unmounting $MOUNTPOINT"
     diskutil unmount "$MOUNTPOINT" || {
         log "ERROR: Failed to unmount $MOUNTPOINT"
         exit 1
     }
+    
+    if [ -n "$DEVICE" ]; then
+        log "Detaching $DEVICE"
+        hdiutil detach "$DEVICE" || {
+            log "ERROR: Failed to detach $DEVICE"
+            exit 1
+        }
+    fi
 fi
 
 # 3. Copy/sync BUNDLE to DEST
