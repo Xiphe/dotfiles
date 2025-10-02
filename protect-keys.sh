@@ -61,7 +61,11 @@ fi
 # All checks passed - proceed with operations
 log "Starting sync operations"
 
-# 1. Unmount volume
+# 1. Kill any GPG processes that might interfere
+log "Terminating all GPG processes before unmount"
+gpgconf --kill all || log "WARNING: Failed to terminate GPG processes"
+
+# 2. Unmount volume
 if mount | grep -q "$MOUNTPOINT"; then
     log "Unmounting $MOUNTPOINT"
     diskutil unmount "$MOUNTPOINT" || {
@@ -70,12 +74,12 @@ if mount | grep -q "$MOUNTPOINT"; then
     }
 fi
 
-# 2. Copy/sync BUNDLE to DEST
+# 3. Copy/sync BUNDLE to DEST
 log "Syncing $BUNDLE to $DEST"
 rsync -av --delete "$BUNDLE" "$(dirname "$DEST")/" || {
     log "ERROR: Failed to sync $BUNDLE to $DEST"
     exit 1
 }
 
-# 3. Log success
+# 4. Log success
 log "SUCCESS: closed and synced keys"
