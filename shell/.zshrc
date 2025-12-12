@@ -90,7 +90,9 @@ nodejs-init() {
 }
 
 mount-keys() {
-  hdiutil attach "$HOME/Keys.sparsebundle" -mountpoint /Volumes/Keys
+  op read "op://Private/Keys v2/password" | tr -d '\n' | hdiutil attach -stdinpass "$HOME/Keys.sparsebundle" -mountpoint /Volumes/Keys;
+  osascript -e 'display notification "Keys disk mounted successfully" with title "Keys Mounted"' &&
+  sleep 2
 }
 
 gitCopyFromBranch() {
@@ -174,3 +176,8 @@ source $ZSH/oh-my-zsh.sh
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+
+# bum
+export BUM_INSTALL="$HOME/.bum"
+export BUN_BIN="$HOME/.bun/bin"
+export PATH="$BUM_INSTALL/bin:$BUN_BIN:$PATH"
