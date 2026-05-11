@@ -1,4 +1,7 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
+# pipx: use a working Homebrew Python for app venvs. Some python@3.14 bottles
+# break pyexpat on certain macOS versions; override until Homebrew ships a fix.
+export PIPX_DEFAULT_PYTHON="$($(command -v brew) --prefix python@3.13)/bin/python3.13"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$HOME/.rbenv/bin:/Applications/Docker.app/Contents/Resources/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 export ZSH=~/.oh-my-zsh
@@ -95,6 +98,16 @@ mount-keys() {
   sleep 2
 }
 
+rmnodemodules() {
+  local dir="${1:-.}"
+  echo "Searching for node_modules folders in '$dir'..."
+  find "$dir" -type d -name "node_modules" -prune -print | while read nmdir; do
+    echo "Removing $nmdir"
+    rm -rf "$nmdir"
+  done
+  echo "Done removing all node_modules folders under '$dir'."
+}
+
 gitCopyFromBranch() {
     # Check for correct number of arguments
     if [ $# -ne 2 ]; then
@@ -123,43 +136,7 @@ gitCopyFromBranch() {
 }
 
 checkout-pr() {
-  if [[ $# -ne 1 ]]; then
-    echo "Usage: checkout-pr <user:branch>"
-    return 1
-  fi
-
-  # Split input into username and branch
-  local GH_USER="${1%%:*}"
-  local GH_BRANCH="${1#*:}"
-
-  if [[ -z "$GH_USER" || -z "$GH_BRANCH" ]]; then
-    echo "Invalid format. Use: checkout-pr user:branch"
-    return 1
-  fi
-
-  local REMOTE_URL
-  local NEW_REMOTE="$GH_USER"
-
-  # Get the origin remote URL
-  REMOTE_URL=$(git remote get-url origin)
-
-  # Replace the existing owner/org with the given GH_USER
-  NEW_REMOTE_URL=$(echo "$REMOTE_URL" | sed -E "s|([^/:]+)/([^/]+)\.git$|$GH_USER/\2.git|")
-
-  # Check if the remote already exists
-  if ! git remote | grep -q "^$NEW_REMOTE\$"; then
-    echo "Adding remote '$NEW_REMOTE' -> $NEW_REMOTE_URL"
-    git remote add "$NEW_REMOTE" "$NEW_REMOTE_URL"
-  fi
-
-  # Fetch the branch from the new remote
-  git fetch "$NEW_REMOTE" "$GH_BRANCH"
-
-  # Create a local branch and check it out
-  git checkout -b "$GH_BRANCH" "$NEW_REMOTE/$GH_BRANCH"
-
-  # Set upstream correctly
-  git branch --set-upstream-to="$NEW_REMOTE/$GH_BRANCH"
+  echo "use git pr"
 }
 
 source $ZSH/oh-my-zsh.sh
@@ -167,9 +144,6 @@ source $ZSH/oh-my-zsh.sh
 ~/dotfiles/protect-keys.sh --check-log
 
 . `brew --prefix`/etc/profile.d/z.sh
-# tabtab source for electron-forge package
-# uninstall by removing these lines or running `tabtab uninstall electron-forge`
-[[ -f /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /Users/xiphe/.npm/_npx/14790/lib/node_modules/electron-forge/node_modules/tabtab/.completions/electron-forge.zsh
 # tabtab source for packages
 # uninstall by removing these lines
 [[ -f ~/.config/tabtab/__tabtab.zsh ]] && . ~/.config/tabtab/__tabtab.zsh || true
@@ -181,3 +155,18 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export BUM_INSTALL="$HOME/.bum"
 export BUN_BIN="$HOME/.bun/bin"
 export PATH="$BUM_INSTALL/bin:$BUN_BIN:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/hannesdiercks/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/Users/hannesdiercks/.bun/_bun" ] && source "/Users/hannesdiercks/.bun/_bun"
+
+# Created by `pipx` on 2026-04-21 09:57:06
+export PATH="$PATH:/Users/hannesdiercks/.local/bin"
+export PATH="$PATH:$HOME/go/bin"

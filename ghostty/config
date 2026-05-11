@@ -64,5 +64,9 @@ window-height = 26
 window-position-x = 0
 window-position-y = 0
 macos-titlebar-style = tabs
+link-previews = true
+cursor-click-to-move = false
 
 keybind = global:cmd+shift+§=toggle_visibility
+keybind = cmd+left=previous_tab
+keybind = cmd+right=next_tab

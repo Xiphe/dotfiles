@@ -4,11 +4,11 @@
 
 # Main translation function
 function translate() {
-    # Check if OPENAI_API_KEY is set
-    if [[ -z "$OPENAI_API_KEY" ]]; then
-        echo "Error: OPENAI_API_KEY environment variable is not set" >&2
+    # Check if TRANSLATE_API_KEY is set
+    if [[ -z "$TRANSLATE_API_KEY" ]]; then
+        echo "Error: TRANSLATE_API_KEY environment variable is not set" >&2
         echo "Please set your OpenAI API key in your .zshrc or .zshenv file:" >&2
-        echo "export OPENAI_API_KEY='your-api-key-here'" >&2
+        echo "export TRANSLATE_API_KEY='your-api-key-here'" >&2
         return 1
     fi
     
@@ -78,7 +78,7 @@ function translate() {
     local temp_file=$(mktemp)
     curl -s https://api.openai.com/v1/chat/completions \
         -H "Content-Type: application/json" \
-        -H "Authorization: Bearer $OPENAI_API_KEY" \
+        -H "Authorization: Bearer $TRANSLATE_API_KEY" \
         -d "{
             \"model\": \"gpt-4.1-nano\",
             \"messages\": [
@@ -91,7 +91,7 @@ function translate() {
                     \"content\": \"$text\"
                 }
             ],
-            \"temperature\": 0.1
+            \"temperature\": 0.2
         }" > "$temp_file"
 
     # Check if the API request was successful
