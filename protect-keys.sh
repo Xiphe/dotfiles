@@ -4,7 +4,7 @@ set -euo pipefail
 
 MOUNTPOINT="/Volumes/Keys"
 BUNDLE="$HOME/Keys.sparsebundle"        
-DEST="$HOME/Archive\ Synced/Keys.sparsebundle"
+DEST="$HOME/Archive Synced/Keys.sparsebundle"
 LOG_FILE="/tmp/protect-keys.log"
 
 # Handle --check-log flag
