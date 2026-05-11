@@ -52,14 +52,7 @@ if [ ! -d "$MOUNTPOINT" ]; then
     exit 0
 fi
 
-# Check 3: DEST should be present, warn if not
-if [ ! -d "$(dirname "$DEST")" ]; then
-    log "WARNING: DEST directory doesn't exist at $(dirname "$DEST") - aborting"
-    exit 0
-fi
-
-# All checks passed - proceed with operations
-log "Starting sync operations"
+log "Starting protect-keys operations"
 
 # 1. Kill any GPG processes that might interfere
 if pgrep gpg > /dev/null; then
@@ -89,6 +82,15 @@ if mount | grep -q "$MOUNTPOINT"; then
         }
     fi
 fi
+
+# Check 3: DEST should be present, warn if not
+if [ ! -d "$(dirname "$DEST")" ]; then
+    log "WARNING: DEST directory doesn't exist at $(dirname "$DEST") - aborting"
+    exit 0
+fi
+
+# Checks passed - proceed with operations
+log "Starting sync operations"
 
 # 3. Copy/sync BUNDLE to DEST
 log "Syncing $BUNDLE to $DEST"
